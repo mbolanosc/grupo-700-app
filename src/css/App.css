@@ -1,0 +1,22 @@
+
+.app-container{
+	background-color: #E7E7E7;
+}
+.left-form-container{
+
+}
+.rigth-form-container{
+
+}
+textarea.form-control {
+    height: 8.6em;
+}
+#formControlsSelect{
+	width: 90%;
+}
+.multiple-fields{
+	height: 12em !important;
+}
+#bottom-rigth-form{
+
+}
