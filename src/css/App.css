@@ -1,7 +1,10 @@
-
+/*navbar*/
 #navbar-cronometer{
 	float: right;
 	margin-top: 1em;
+}
+.glyphicon-earphone:before {
+  margin-right: 1em;
 }
 .app-container{
 	background-color: #E7E7E7;

@@ -3,6 +3,7 @@ import {Row,Col,FormGroup,ControlLabel,FormControl,Form,Radio,Panel,Button} from
 
 class Leftform extends Component {
 
+
   render() {
     return (
 			<div className="left-form-container">

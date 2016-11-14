@@ -1,7 +1,22 @@
 import React, {Component} from 'react';
-import { Navbar, FormGroup, FormControl, Button, Radio, Col} from 'react-bootstrap';
+import { Navbar, FormGroup, FormControl, Button, Radio, Col,Glyphicon} from 'react-bootstrap';
 
 class Topbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {userHomePhone: ' '};
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+  handleChange(event) {
+    this.setState({userHomePhone: event.target.value});
+    console.log(event.target.value);
+  }
+
+  handleSubmit(event) {
+    alert('A name was submitted: ' + this.state.userPhone);
+    event.preventDefault();
+  }
 
   render() {
     return (
@@ -23,12 +38,17 @@ class Topbar extends Component {
            </FormGroup>
 
             <FormGroup>
-              <FormControl type="text" placeholder="Número de casa" />
+              <FormControl
+                type="text"
+                placeholder="Número de casa"
+                value={this.state.userHomePhone}
+                onChange={this.handleChange}
+              />
             </FormGroup>
-            {' '}
+
 
             <FormGroup>
-              <FormControl type="text" placeholder="Número de celular" />
+              <FormControl type="text" placeholder="Número de celular" required/>
             </FormGroup>
              {' '}
 
@@ -36,11 +56,12 @@ class Topbar extends Component {
               <FormControl type="text" placeholder="Número de oficina" />
             </FormGroup>
              {' '}
-            <Button type="submit">Buscar</Button>
+            <Button type="submit" onSubmit={this.handleSubmit}>Buscar</Button>
           </Navbar.Form>
 
           <Col id="navbar-cronometer">
             <div>
+            <Glyphicon glyph="earphone" />
               Aqui va el cronometro
             </div>
           </Col>

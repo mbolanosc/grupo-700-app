@@ -1,11 +1,9 @@
 import React, {Component} from 'react';
-import {Row,Col,FormGroup,FormControl,ControlLabel,Tabs,Tab,Panel} from 'react-bootstrap';
+import {Row,Col,FormGroup,FormControl,ControlLabel,Tabs,Tab} from 'react-bootstrap';
 import Multiselect from 'react-widgets/lib/Multiselect';
 
 class Rightform extends Component {
-  constructor(props) {
-    super(props);
-  }
+
   render() {
     const  MultiselectDataTema =
       ['Familiar','Adicciones','Finanzas','Sanidad','Problemas emocionales','Vida cristiana'];
