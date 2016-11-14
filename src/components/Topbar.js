@@ -4,18 +4,51 @@ import { Navbar, FormGroup, FormControl, Button, Radio, Col,Glyphicon} from 'rea
 class Topbar extends Component {
   constructor(props) {
     super(props);
-    this.state = {userHomePhone: ' '};
-    this.handleChange = this.handleChange.bind(this);
+    this.state = {
+      userHomePhone:'',
+      userPhone:'',
+      userOfficePhone:''
+    };
+    this.handleChangeUserHomePhone = this.handleChangeUserHomePhone.bind(this);
+    this.handleChangeUserPhone = this.handleChangeUserPhone.bind(this);
+    this.handleChangeUserOfficePhone = this.handleChangeUserOfficePhone.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  handleChange(event) {
-    this.setState({userHomePhone: event.target.value});
-    console.log(event.target.value);
+  handleChangeUserHomePhone(e) {
+    this.setState({userHomePhone: e.target.value});
+    console.log('telefono de la casa' + e.target.value);
+  }
+  handleChangeUserPhone(e) {
+    this.setState({userPhone: e.target.value});
+    console.log('telefono celular' +e.target.value);
+  }
+  handleChangeUserOfficePhone(e) {
+    this.setState({userOfficePhone: e.target.value});
+    console.log('telefono oficina' +e.target.value);
   }
 
-  handleSubmit(event) {
-    alert('A name was submitted: ' + this.state.userPhone);
-    event.preventDefault();
+  getValidationLenghtHomePhone() {
+    if (this.state.userHomePhone.length === 8) return 'success';
+    else if (this.state.userHomePhone.length >= 5) return 'warning';
+    else if (this.state.userHomePhone.length < 0) return 'error';
+  }
+  getValidationLenghtPhone() {
+    if (this.state.userPhone.length === 8) return 'success';
+    else if (this.state.userPhone.length >= 5) return 'warning';
+    else if (this.state.userPhone.length < 0) return 'error';
+  }
+  getValidationLenghtOfficePhone() {
+    if (this.state.userOfficePhone.length === 8) return 'success';
+    else if (this.state.userOfficePhone.length >= 5) return 'warning';
+    else if (this.state.userOfficePhone.length < 0) return 'error';
+  }
+
+
+
+
+  handleSubmit(e) {
+    e.preventDefault();
   }
 
   render() {
@@ -36,24 +69,35 @@ class Topbar extends Component {
              </Radio>
              {' '}
            </FormGroup>
-
-            <FormGroup>
+           {' '}
+           {' '}
+            <FormGroup validationState={this.getValidationLenghtHomePhone()}>
               <FormControl
-                type="text"
                 placeholder="Número de casa"
                 value={this.state.userHomePhone}
-                onChange={this.handleChange}
+                onChange={this.handleChangeUserHomePhone}
               />
+              <FormControl.Feedback/>
             </FormGroup>
+            {' '}
 
-
-            <FormGroup>
-              <FormControl type="text" placeholder="Número de celular" required/>
+            <FormGroup validationState={this.getValidationLenghtPhone()}>
+              <FormControl
+                placeholder="Número de celular"
+                value={this.state.userPhone}
+                onChange={this.handleChangeUserPhone}
+              />
+              <FormControl.Feedback/>
             </FormGroup>
              {' '}
 
-            <FormGroup>
-              <FormControl type="text" placeholder="Número de oficina" />
+            <FormGroup validationState={this.getValidationLenghtOfficePhone()}>
+              <FormControl
+                type="text"
+                placeholder="Número de oficina"
+                value={this.state.userOfficePhone}
+                onChange={this.handleChangeUserOfficePhone}/>
+              <FormControl.Feedback/>
             </FormGroup>
              {' '}
             <Button type="submit" onSubmit={this.handleSubmit}>Buscar</Button>
