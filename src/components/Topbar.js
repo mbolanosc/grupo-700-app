@@ -19,17 +19,17 @@ class Topbar extends Component {
   handleChangeUserHomePhone(e) {
     this.setState({userHomePhone: e.target.value});
     this.validateEmpty(e.target.value);
-    console.log('telefono de la casa' + e.target.value);
+    console.log('telefono de la casa '  + e.target.value);
   }
   handleChangeUserPhone(e) {
     this.setState({userPhone: e.target.value});
     this.validateEmpty(e.target.value)
-    console.log('telefono celular' +e.target.value);
+    console.log('telefono celular ' +e.target.value);
   }
   handleChangeUserOfficePhone(e) {
     this.setState({userOfficePhone: e.target.value});
     this.validateEmpty(e.target.value)
-    console.log('telefono oficina' +e.target.value);
+    console.log('telefono oficina ' +e.target.value);
   }
 
   handleSearch(e){
@@ -46,7 +46,6 @@ class Topbar extends Component {
     var colorValidOfficePhone = this.getValidationLenghtOfficePhone(this.state.userOfficePhone);
     var validOfficePhone =  this.validateEmpty(this.state.userOfficePhone);
     var validNumberOfficePhone = this.validateNumber(this.state.userOfficePhone);
-
 
     if( ( validHomePhone && colorValidHomePhone === 'success' && validNumberHomePhone === false ) || ( colorValidPhone === 'success' && validPhone  && validNumberPhone === false) || (validOfficePhone && colorValidOfficePhone === 'success' && validNumberOfficePhone === false) ){
       console.log('entro a buscar en la base de datos');
@@ -83,12 +82,10 @@ class Topbar extends Component {
   }
   getValidationLenghtOfficePhone() {
     if (this.state.userOfficePhone.length === 8) return 'success';
-    else if (this.state.userOfficePhone.length >= 5) return 'warning';
+    else if (this.state.userOfficePhone.length === 5) return 'warning';
     else if (this.state.userOfficePhone.length > 8) return 'error';
     else if (this.state.userOfficePhone.length < 0) return 'error';
   }
-
-
 
   render() {
     return (
@@ -131,7 +128,7 @@ class Topbar extends Component {
             </FormGroup>
              {' '}
 
-            <FormGroup validationState={this.getValidationLenghtOfficePhone()}>
+            <FormGroup validationState={this.getValidationLenghtOfficePhone()} >
               <FormControl
                 type="text"
                 placeholder="Número de oficina"
