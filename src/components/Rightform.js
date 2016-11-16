@@ -3,7 +3,23 @@ import {Row,Col,FormGroup,FormControl,ControlLabel,Tabs,Tab} from 'react-bootstr
 import Multiselect from 'react-widgets/lib/Multiselect';
 
 class Rightform extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      userSubject:'',
+      userSubjectPristine: true,
+      userSubjectEmpty: true,
 
+      userReason:'',
+      userReasonPristine: true,
+      userReasonEmpty: true,
+  };
+    this.handleChangeUserSubject = this.handleChangeUserSubject.bind(this);
+  }
+  handleChangeUserSubject(e) {
+    this.setState({userSubject: e.target.value});
+    console.log('tema '  + e.target.value);
+  }
   render() {
     const  MultiselectDataTema =
       ['Familiar','Adicciones','Finanzas','Sanidad','Problemas emocionales','Vida cristiana'];
@@ -15,7 +31,12 @@ class Rightform extends Component {
 				<Row className="show-grid">
 					<Col md={6}>
            <ControlLabel>Tema</ControlLabel>
-            <Multiselect data={MultiselectDataTema} placeholder="Tema" />
+              <Multiselect
+                data={MultiselectDataTema}
+                placeholder="Tema"
+                /*value={this.state.userSubject}
+                onChange={this.handleChangeUserSubject}*/
+              />
 					</Col>
 
 					<Col md={6}>

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Row,Col,FormGroup,ControlLabel,FormControl,Form,Radio,Panel,Button} from 'react-bootstrap';
 
-
 class Leftform extends Component {
   constructor(props) {
     super(props);
@@ -9,30 +8,37 @@ class Leftform extends Component {
       userName:'',
       userNamePristine: true,
       userNameEmpty: true,
+      userNameErrorState : false,
 
       userFirstLastName: '',
       userFirstLastPristine: true,
       userFirstLastEmpty: true,
+      userFirstLastNameErrorState: false,
 
       userSecondLastName: '',
       userSecondLastPristine: true,
       userSecondLastEmpty: true,
+      userSecondLastNameErrorState: false,
 
       userEmail: '',
       userEmailPristine: true,
       userEmailEmpty: true,
+      userEmailErrorState: false,
 
       userBornDate: '',
       userBornDatePristine: true,
       userBornDateEmpty: true,
+      userBornDateErrorState: false,
 
       userResidence: '',
       userResidencePristine: true,
       userResidenceEmpty: true,
+      userResidenceErrorState: false,
 
       userResumeCase: '',
       userResumeCasePristine: true,
       userResumeCaseEmpty: true,
+      userResumeErrorState: false,
 
     };
       this.handleChangeUserName = this.handleChangeUserName.bind(this);
@@ -103,10 +109,19 @@ class Leftform extends Component {
         && (secondLastNameState === 'success' && !secondLastNameEmpty )
         && (bornDateValidState === 'success' && !bornDateEmpty)
         && (userResidenceValidState === 'success' && !userResidenceEmpty)
+        && (userResumenCaseValidState === 'success' && !userResumenCaseEmpty)
       ){
       console.log('base de datos');
     }else{
       console.log('no hay base de datos');
+      this.setState({userNameErrorState: true});
+      this.setState({userFirstLastNameErrorState: true});
+      this.setState({userSecondLastNameErrorState: true});
+      this.setState({userBornDateErrorState: true});
+      this.setState({userResidenceErrorState: true});
+      this.setState({userResumeErrorState: true});
+
+      this.setState({userEmailErrorState: true});
     }
   }
 
@@ -152,7 +167,6 @@ class Leftform extends Component {
       break;
     }
   }
-
   validateEmpty(value,input){
     var valid = false;
     switch (input){
@@ -222,12 +236,13 @@ class Leftform extends Component {
     }
     return valid;
   }
-
   ValidLenghtName(){
     if(!this.state.userNamePristine ){
       if (this.state.userName.length >= 3) return 'success';
       else if (this.state.userName.length === 2) return 'warning';
       else if (this.state.userName.length < 1) return 'error';
+    }else if (this.state.userNameErrorState){
+      return 'error';
     }
   }
   validLengthFirstLastName(){
@@ -235,6 +250,8 @@ class Leftform extends Component {
       if (this.state.userFirstLastName.length >= 3) return 'success';
       else if (this.state.userFirstLastName.length === 2) return 'warning';
       else if (this.state.userFirstLastName.length < 1) return 'error';
+    }else if (this.state.userFirstLastNameErrorState) {
+      return 'error';
     }
   }
   validLengthSecondLastName(){
@@ -242,12 +259,16 @@ class Leftform extends Component {
       if (this.state.userSecondLastName.length >= 3) return 'success';
       else if (this.state.userSecondLastName.length === 2) return 'warning';
       else if (this.state.userSecondLastName.length < 1) return 'error';
+    }else if (this.state.userSecondLastNameErrorState) {
+      return 'error';
     }
   }
   ValidDate(){
     if(!this.state.userBornDatePristine ){
       if (this.state.userBornDate.length > 1) return 'success';
       else if (this.state.userBornDate.length < 1) return 'error';
+    }else if (this.state.userBornDateErrorState) {
+      return 'error';
     }
   }
   ValidResidence(){
@@ -255,6 +276,8 @@ class Leftform extends Component {
       if (this.state.userResidence.length >= 3) return 'success';
       else if (this.state.userResidence.length === 2) return 'warning';
       else if (this.state.userResidence.length < 1) return 'error';
+    }else if (this.state.userResidenceErrorState) {
+      return 'error';
     }
   }
   ValidResumen(){
@@ -262,6 +285,8 @@ class Leftform extends Component {
       if (this.state.userResumeCase.length >= 3) return 'success';
       else if (this.state.userResumeCase.length === 2) return 'warning';
       else if (this.state.userResumeCase.length < 1) return 'error';
+    }else if (this.state.userResumeErrorState) {
+      return 'error';
     }
   }
 
@@ -384,7 +409,6 @@ class Leftform extends Component {
           </Col>
         </Row>
 
-
         <Row className="show-grid">
           <Col xs={6} md={4}>
             <Form horizontal >
@@ -489,11 +513,6 @@ class Leftform extends Component {
             </Row>
           </Col>
         </Row>
-
-
-
-
-
 			</div>
     )
   }
