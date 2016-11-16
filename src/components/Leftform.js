@@ -40,6 +40,9 @@ class Leftform extends Component {
       userResumeCaseEmpty: true,
       userResumeErrorState: false,
 
+      userChristianRadioChecked: false,
+
+
     };
       this.handleChangeUserName = this.handleChangeUserName.bind(this);
       this.handleChangeFirstLastName = this.handleChangeFirstLastName.bind(this);
@@ -47,8 +50,10 @@ class Leftform extends Component {
 
       this.handleChangeEmail = this.handleChangeEmail.bind(this);
       this.handleChangeBornDate = this.handleChangeBornDate.bind(this);
-      this.handleChangeResidence= this.handleChangeResidence.bind(this);
-      this.handleChangeResumeCase= this.handleChangeResumeCase.bind(this);
+      this.handleChangeResidence = this.handleChangeResidence.bind(this);
+      this.handleChangeResumeCase = this.handleChangeResumeCase.bind(this);
+      this.handleChangeChristianRadio = this.handleChangeChristianRadio.bind(this);
+
       this.handleSave = this.handleSave.bind(this);
   }
   handleChangeUserName(e) {
@@ -75,10 +80,16 @@ class Leftform extends Component {
     this.setState({userResidence: e.target.value});
     console.log('residencia '  + e.target.value);
   }
-
   handleChangeResumeCase(e){
     this.setState({userResumeCase: e.target.value});
     console.log('resumen caso '  + e.target.value);
+  }
+
+  handleChangeChristianRadio(e){
+    this.setState({userChristianRadioChecked: true});
+    if (this.state.userChristianRadioChecked) {
+      this.setState({userChristianRadioChecked: false});
+    }
   }
 
   handleSave(e){
@@ -498,8 +509,14 @@ class Leftform extends Component {
           </FormGroup>
           </Col>
 
+
+
           <Col md={4}>
-            <Radio readOnly>
+
+            <Radio
+              checked={this.state.userChristianRadioChecked}
+              onChange={this.handleChangeChristianRadio}
+            >
               Es cristiano?
             </Radio>
 
