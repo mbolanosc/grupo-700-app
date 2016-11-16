@@ -8,36 +8,106 @@ class Leftform extends Component {
     this.state = {
       userName:'',
       userNamePristine: true,
+      userNameEmpty: true,
+
       userFirstLastName: '',
       userFirstLastPristine: true,
+      userFirstLastEmpty: true,
+
       userSecondLastName: '',
-      userSecondLastPristine: true
+      userSecondLastPristine: true,
+      userSecondLastEmpty: true,
+
+      userEmail: '',
+      userEmailPristine: true,
+      userEmailEmpty: true,
+
+      userBornDate: '',
+      userBornDatePristine: true,
+      userBornDateEmpty: true,
+
+      userResidence: '',
+      userResidencePristine: true,
+      userResidenceEmpty: true,
+
+      userResumeCase: '',
+      userResumeCasePristine: true,
+      userResumeCaseEmpty: true,
+
     };
       this.handleChangeUserName = this.handleChangeUserName.bind(this);
       this.handleChangeFirstLastName = this.handleChangeFirstLastName.bind(this);
       this.handleChangeSecondLastName = this.handleChangeSecondLastName.bind(this);
+
+      this.handleChangeEmail = this.handleChangeEmail.bind(this);
+      this.handleChangeBornDate = this.handleChangeBornDate.bind(this);
+      this.handleChangeResidence= this.handleChangeResidence.bind(this);
+      this.handleChangeResumeCase= this.handleChangeResumeCase.bind(this);
       this.handleSave = this.handleSave.bind(this);
   }
   handleChangeUserName(e) {
     this.setState({userName: e.target.value});
-    //this.validateEmpty(e.target.value);
     console.log('name '  + e.target.value);
   }
   handleChangeFirstLastName(e) {
     this.setState({userFirstLastName: e.target.value});
-    //this.validateEmpty(e.target.value);
     console.log('name '  + e.target.value);
   }
   handleChangeSecondLastName(e) {
     this.setState({userSecondLastName: e.target.value});
-    //this.validateEmpty(e.target.value);
     console.log('name '  + e.target.value);
   }
+  handleChangeEmail(e) {
+    this.setState({userEmail: e.target.value});
+    console.log('email '  + e.target.value);
+  }
+  handleChangeBornDate(e) {
+    this.setState({userBornDate: e.target.value});
+    console.log('fecha '  + e.target.value);
+  }
+  handleChangeResidence(e){
+    this.setState({userResidence: e.target.value});
+    console.log('residencia '  + e.target.value);
+  }
 
+  handleChangeResumeCase(e){
+    this.setState({userResumeCase: e.target.value});
+    console.log('resumen caso '  + e.target.value);
+  }
 
   handleSave(e){
     console.log('save');
+    var nameValidState = this.ValidLenghtName(this.state.userName);
+    var nameEmpty = this.validateEmpty(this.state.userName,'inputname');
 
+    var firstLastNameState = this.validLengthFirstLastName(this.state.userFirstLastName);
+    var firstLastNameEmpty = this.validateEmpty(this.state.userFirstLastName,'inputFirstLastName');
+
+    var secondLastNameState = this.validLengthFirstLastName(this.state.userSecondLastName);
+    var secondLastNameEmpty = this.validateEmpty(this.state.userSecondLastName,'inputSecondLastName');
+
+    var bornDateValidState = this.ValidDate(this.state.userBornDate);
+    var bornDateEmpty = this.validateEmpty(this.state.userBornDate,'inputDate');
+
+    var userResidenceValidState = this.ValidResidence(this.state.userResidence);
+    var userResidenceEmpty = this.validateEmpty(this.state.userResidence,'inputResidence');
+
+    var userResumenCaseValidState = this.ValidResumen(this.state.userResumeCase);
+    var userResumenCaseEmpty = this.validateEmpty(this.state.userResumeCase,'inputResumeCase');
+
+
+    console.log("asdasdsad " + userResumenCaseValidState + " " + userResumenCaseEmpty);
+
+    if( (nameValidState === 'success' && !nameEmpty)
+        && (firstLastNameState === 'success' && !firstLastNameEmpty )
+        && (secondLastNameState === 'success' && !secondLastNameEmpty )
+        && (bornDateValidState === 'success' && !bornDateEmpty)
+        && (userResidenceValidState === 'success' && !userResidenceEmpty)
+      ){
+      console.log('base de datos');
+    }else{
+      console.log('no hay base de datos');
+    }
   }
 
   validatePristine(value){
@@ -57,29 +127,102 @@ class Leftform extends Component {
         this.validLengthSecondLastName();
       break;
 
+      case 'inputEmail':
+        this.setState({userEmailPristine: false});
+
+      break;
+
+      case 'inputDate':
+        this.setState({userBornDatePristine: false});
+        this.ValidDate();
+      break;
+
+      case 'inputResidence':
+        this.setState({userResidencePristine: false});
+        this.ValidResidence();
+      break;
+
+      case 'inputResumeCase':
+        this.setState({userResumeCasePristine: false});
+        this.ValidResumen();
+      break;
+
       default:
         console.log('no se input');
       break;
     }
   }
 
-  validateEmpty(value){
-    var valid = true;
-    if(value === ''){
-      valid = false;
-      console.log('esta vacio');
-    }else {
-      console.log('no esta vacio');
-    }
-    return valid;
-  }
-  validateString(value){
+  validateEmpty(value,input){
     var valid = false;
-    if(typeof value === "string"){
-      valid = true;
+    switch (input){
+      case 'inputname':
+        if(value === ''){
+          console.log('hay espacios en el input');
+          valid = true;
+        }else{
+          this.setState({userNameEmpty: false});
+          console.log('el espacio esta lleno');
+        }
+      break;
+
+      case 'inputFirstLastName':
+        if(value === ''){
+          console.log('hay espacios en el input');
+          valid = true;
+        }else{
+          this.setState({userFirstLastEmpty: false});
+          console.log('el espacio esta lleno');
+        }
+      break;
+
+      case 'inputSecondLastName':
+        if(value === ''){
+          console.log('hay espacios en el input');
+          valid = true;
+        }else{
+          this.setState({userSecondLastEmpty: false});
+          console.log('el espacio esta lleno');
+        }
+      break;
+
+      case 'inputDate':
+        if(value === ''){
+          console.log('hay espacios en el input');
+          valid = true;
+        }else{
+          this.setState({userBornDateEmpty: false});
+          console.log('el espacio esta lleno');
+        }
+      break;
+
+      case 'inputResidence':
+        if(value === ''){
+          console.log('hay espacios en el input');
+          valid = true;
+        }else{
+          this.setState({userResidenceEmpty: false});
+          console.log('el espacio esta lleno');
+        }
+      break;
+
+      case 'inputResumeCase':
+        if(value === ''){
+          console.log('hay espacios en el input');
+          valid = true;
+        }else{
+          this.setState({userResumeCaseEmpty: false});
+          console.log('el espacio esta lleno');
+        }
+      break;
+
+      default:
+        console.log('no se input');
+      break;
     }
     return valid;
   }
+
   ValidLenghtName(){
     if(!this.state.userNamePristine ){
       if (this.state.userName.length >= 3) return 'success';
@@ -95,13 +238,32 @@ class Leftform extends Component {
     }
   }
   validLengthSecondLastName(){
-    if(!this.state.userSecondLastPristine ){
+    if(!this.state.userSecondLastPristine){
       if (this.state.userSecondLastName.length >= 3) return 'success';
       else if (this.state.userSecondLastName.length === 2) return 'warning';
       else if (this.state.userSecondLastName.length < 1) return 'error';
     }
   }
-
+  ValidDate(){
+    if(!this.state.userBornDatePristine ){
+      if (this.state.userBornDate.length > 1) return 'success';
+      else if (this.state.userBornDate.length < 1) return 'error';
+    }
+  }
+  ValidResidence(){
+    if(!this.state.userResidencePristine){
+      if (this.state.userResidence.length >= 3) return 'success';
+      else if (this.state.userResidence.length === 2) return 'warning';
+      else if (this.state.userResidence.length < 1) return 'error';
+    }
+  }
+  ValidResumen(){
+    if(!this.state.userResumeCasePristine){
+      if (this.state.userResumeCase.length >= 3) return 'success';
+      else if (this.state.userResumeCase.length === 2) return 'warning';
+      else if (this.state.userResumeCase.length < 1) return 'error';
+    }
+  }
 
   render() {
     return (
@@ -177,11 +339,18 @@ class Leftform extends Component {
 
         <Row className="show-grid">
           <Col xs={6} md={4}>
-            <Form horizontal >
-              <FormGroup controlId="formHorizontalEmail">
+            <Form horizontal>
+              <FormGroup >
                 <Col componentClass={ControlLabel} sm={4}>Email</Col>
                 <Col sm={12}>
-                    <FormControl type="email" placeholder="Correo electronico" />
+                    <FormControl
+                      type="email"
+                      placeholder="Correo electronico"
+                      value={this.state.userEmail}
+                      onChange={this.handleChangeEmail}
+                      onBlur={this.validatePristine.bind(this,'inputEmail')}
+                    />
+
                 </Col>
               </FormGroup>
             </Form>
@@ -189,14 +358,16 @@ class Leftform extends Component {
 
           <Col xs={6} md={4}>
             <Form horizontal >
-              <FormGroup >
+              <FormGroup  validationState={this.ValidDate()}>
                 <Col componentClass={ControlLabel} sm={4}>Nacimiento</Col>
                 <Col sm={12}>
                     <FormControl
                       type="date"
-
+                      value={this.state.userBornDate}
+                      onChange={this.handleChangeBornDate}
+                      onBlur={this.validatePristine.bind(this,'inputDate')}
                     />
-
+                    <FormControl.Feedback/>
                 </Col>
               </FormGroup>
             </Form>
@@ -213,14 +384,22 @@ class Leftform extends Component {
           </Col>
         </Row>
 
+
         <Row className="show-grid">
           <Col xs={6} md={4}>
             <Form horizontal >
-              <FormGroup controlId="formHorizontalEmail">
+              <FormGroup validationState={this.ValidResidence()}>
                 <Col componentClass={ControlLabel} sm={4}>Residencia</Col>
                 <Col sm={12}>
-                    <FormControl type="text" placeholder="Lugar de residencia" />
+                    <FormControl
+                      type="text"
+                      placeholder="Lugar de residencia"
+                      value={this.state.userResidence}
+                      onChange={this.handleChangeResidence}
+                      onBlur={this.validatePristine.bind(this,'inputResidence')}
+                    />
                 </Col>
+                <FormControl.Feedback/>
               </FormGroup>
             </Form>
           </Col>
@@ -283,9 +462,15 @@ class Leftform extends Component {
 
         <Row className="show-grid">
           <Col md={8}>
-          <FormGroup controlId="formControlsTextarea">
-          <ControlLabel>Resumen del caso</ControlLabel>
-          <FormControl componentClass="textarea" />
+          <FormGroup validationState={this.ValidResumen()}>
+            <ControlLabel>Resumen del caso</ControlLabel>
+            <FormControl
+              componentClass="textarea"
+              value={this.state.userResumeCase}
+              onChange={this.handleChangeResumeCase}
+              onBlur={this.validatePristine.bind(this,'inputResumeCase')}
+              />
+              <FormControl.Feedback/>
           </FormGroup>
           </Col>
 
