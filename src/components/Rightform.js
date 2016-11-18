@@ -2,46 +2,43 @@ import React, {Component} from 'react';
 import {Row,Col,FormGroup,FormControl,ControlLabel,Tabs,Tab} from 'react-bootstrap';
 import Multiselect from 'react-widgets/lib/Multiselect';
 
+const  MultiselectDataTema =
+  ['Familiar','Adicciones','Finanzas','Sanidad','Problemas emocionales','Vida cristiana'];
+const MultiselectDataMotivo = [
+    'Oración','Testimonio','Ofrenda','Consejería','Otro'];
+
 class Rightform extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      userSubject:'',
-      userSubjectPristine: true,
-      userSubjectEmpty: true,
-
-      userReason:'',
-      userReasonPristine: true,
-      userReasonEmpty: true,
+      handleChangeUserSubject: ['boro','fer'],
+      testprop : 'hola soy otro prop desde otro componente'
   };
     this.handleChangeUserSubject = this.handleChangeUserSubject.bind(this);
   }
   handleChangeUserSubject(e) {
-    this.setState({userSubject: e.target.value});
-    console.log('tema '  + e.target.value);
+    this.setState({handleChangeUserSubject: e});
+    console.log(this.state);
   }
-  render() {
-    const  MultiselectDataTema =
-      ['Familiar','Adicciones','Finanzas','Sanidad','Problemas emocionales','Vida cristiana'];
-    const MultiselectDataMotivo = [
-        'Oración','Testimonio','Ofrenda','Consejería','Otro'];
 
+  render() {
     return (
 			<div className="rigth-form-container">
 				<Row className="show-grid">
 					<Col md={6}>
            <ControlLabel>Tema</ControlLabel>
-              <Multiselect
-                data={MultiselectDataTema}
-                placeholder="Tema"
-                /*value={this.state.userSubject}
-                onChange={this.handleChangeUserSubject}*/
-              />
+                <Multiselect
+                  data={MultiselectDataTema}
+                  placeholder="Tema"
+                  onChange={this.handleChangeUserSubject}
+                />
 					</Col>
 
 					<Col md={6}>
 					 <ControlLabel>Motivo</ControlLabel>
-             <Multiselect data={MultiselectDataMotivo} placeholder="Motivo" />
+             <Multiselect
+                data={MultiselectDataMotivo}
+                placeholder="Motivo" />
            </Col>
 				</Row>
 

@@ -4,7 +4,7 @@ import {Row,Col,FormGroup,ControlLabel,FormControl,Form,Radio,Panel,Button} from
 class Leftform extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { //igual a un objeto
       userName:'',
       userNamePristine: true,
       userNameEmpty: true,
@@ -123,6 +123,7 @@ class Leftform extends Component {
         && (userResumenCaseValidState === 'success' && !userResumenCaseEmpty)
       ){
       console.log('base de datos');
+
     }else{
       console.log('no hay base de datos');
       this.setState({userNameErrorState: true});
@@ -133,6 +134,7 @@ class Leftform extends Component {
       this.setState({userResumeErrorState: true});
 
       this.setState({userEmailErrorState: true});
+
     }
   }
 
