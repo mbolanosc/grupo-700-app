@@ -14,12 +14,44 @@ class Topbar extends Component{
     }
     else if (this.props.stateHouseNumber.length < 0) {
       return 'error';
-    }else if (this.props.validateError) {
+    }else if (this.props.validateErrorHomePhone) {
+      return 'warning';
+    }
+  }
+  getValidationLenghtPhone() {
+    if (this.props.statePhoneNumber.length === 8){
+      return 'success';
+    }
+    else if (this.props.statePhoneNumber.length === 5){
+      return 'warning';
+    }
+    else if (this.props.statePhoneNumber.length > 8){
+      return 'error';
+    }
+    else if (this.props.statePhoneNumber.length < 0){
+      return 'error';
+    }else if (this.props.validateErrorPhone) {
+      return 'warning';
+    }
+  }
+  getValidationLenghtOfficePhone(){
+    if (this.props.statePhoneOfficeNumber.length === 8){
+      return 'success';
+    }
+    else if (this.props.statePhoneOfficeNumber.length === 5){
+      return 'warning';
+    }
+    else if (this.props.statePhoneOfficeNumber.length > 8){
+      return 'error';
+    }
+    else if (this.props.statePhoneOfficeNumber.length < 0){
+      return 'error';
+    }else if (this.props.validateErrorOfficePhone) {
       return 'warning';
     }
   }
   render(){
-    console.log('state desde componente top: ' , this.props);
+    console.log('state desde componente topbar: ' , this.props);
     return (
       <Navbar>
         <Navbar.Header>
@@ -30,7 +62,7 @@ class Topbar extends Component{
            <FormGroup>
             <SelectList
               defaultValue={["Buscar"]}
-              data={this.props.selecListData}
+              data={this.props.selecListData}onChange={this.props.onChangeRadioBtns}
             />
 
              </FormGroup>
@@ -48,20 +80,22 @@ class Topbar extends Component{
             </FormGroup>
             {' '}
 
-            <FormGroup >
+            <FormGroup validationState={this.getValidationLenghtPhone()}>
               <FormControl
                 placeholder="Número de celular"
-
+                value={this.props.statePhoneNumber}
+                onChange={this.props.onChangePhoneNumber}
               />
               <FormControl.Feedback/>
             </FormGroup>
              {' '}
 
-            <FormGroup>
+            <FormGroup validationState={this.getValidationLenghtOfficePhone()}>
               <FormControl
                 type="text"
                 placeholder="Número de oficina"
-
+                value={this.props.statePhoneOfficeNumber}
+                onChange={this.props.onChangePhoneOfficeNumber}
               />
               <FormControl.Feedback/>
             </FormGroup>
