@@ -61,7 +61,8 @@ class Topbar extends Component{
            <FormGroup>
             <SelectList
               defaultValue={["Buscar"]}
-              data={this.props.selecListData}onChange={this.props.onChangeRadioBtns}
+              data={this.props.selecListData}
+              onChange={this.props.onChangeRadioBtns}
             />
 
              </FormGroup>

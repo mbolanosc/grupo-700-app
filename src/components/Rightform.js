@@ -1,46 +1,67 @@
 import React, {Component} from 'react';
-import {Row,Col,FormGroup,FormControl,ControlLabel,Tabs,Tab} from 'react-bootstrap';
+import {Row,Col,FormGroup,Form,FormControl,ControlLabel,Tabs,Tab} from 'react-bootstrap';
 import Multiselect from 'react-widgets/lib/Multiselect';
 
-const  MultiselectDataTema =
-  ['Familiar','Adicciones','Finanzas','Sanidad','Problemas emocionales','Vida cristiana'];
-const MultiselectDataMotivo = [
-    'Oración','Testimonio','Ofrenda','Consejería','Otro'];
 
 class Rightform extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      handleChangeUserSubject: ['boro','fer'],
-      testprop : 'hola soy otro prop desde otro componente'
-  };
-    this.handleChangeUserSubject = this.handleChangeUserSubject.bind(this);
+    this.state = {};
   }
-  handleChangeUserSubject(e) {
-    this.setState({handleChangeUserSubject: e});
-    console.log(this.state);
+  ValidateLengthTema(){
+    var x=this.props.userTema.length;
+    if(x < 0){
+      console.log('es menor que 0');
+      return 'error';
+    }else if(x >= 1){
+      return 'success';
+    }else if (this.props.userTemaErrorState) {
+      return 'error';
+    }
+  }
+  ValidateLengthMotivo(){
+    var x=this.props.userMotivo.length;
+    if(x < 0){
+      console.log('es menor que 0');
+      return 'error';
+    }else if(x >= 1){
+      return 'success';
+    }else if (this.props.userMotivoErrorState) {
+      return 'error';
+    }
   }
 
   render() {
+    console.log('PROPS' , this.props);
     return (
-			<div className="rigth-form-container">
-				<Row className="show-grid">
-					<Col md={6}>
-           <ControlLabel>Tema</ControlLabel>
-                <Multiselect
-                  data={MultiselectDataTema}
-                  placeholder="Tema"
-                  onChange={this.handleChangeUserSubject}
-                />
-					</Col>
+      <div className="rigth-form-container">
+        <Row className="show-grid">
+          <Col md={6}>
+            <Form horizontal>
+              <FormGroup validationState={this.ValidateLengthTema()}>
+              <ControlLabel>Tema</ControlLabel>
+              <Multiselect
+                data={this.props.dataTema}
+                placeholder="Tema"
+                onChange={this.props.TemaOnChange}
+              />
+            </FormGroup>
+            </Form>
+          </Col>
 
-					<Col md={6}>
-					 <ControlLabel>Motivo</ControlLabel>
-             <Multiselect
-                data={MultiselectDataMotivo}
-                placeholder="Motivo" />
-           </Col>
-				</Row>
+          <Col md={6}>
+            <Form horizontal>
+              <FormGroup validationState={this.ValidateLengthMotivo()}>
+              <ControlLabel>Motivo</ControlLabel>
+                <Multiselect
+                  data={this.props.dataMotivo}
+                  onChange={this.props.MotivoOnChange}
+                  placeholder="Motivo"
+                />
+              </FormGroup>
+              </Form>
+            </Col>
+        </Row>
 
         <br></br>
 
@@ -58,7 +79,7 @@ class Rightform extends Component {
           <Col xs={6} md={4}>
             <FormGroup controlId="formControlsSelect">
               <ControlLabel>Resultado</ControlLabel>
-              <FormControl componentClass="select" >
+              <FormControl componentClass="select">
                 <option value="Nada">Nada</option>
               </FormControl>
             </FormGroup>
@@ -74,14 +95,14 @@ class Rightform extends Component {
           </Col>
 
           <Col id="bottom-rigth-form" md={12}>
-						<Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
-							<Tab eventKey={1} title="Adicciones">Tab 1 content</Tab>
-							<Tab eventKey={2} title="Familiar">Tab 2 content</Tab>
-							<Tab eventKey={3} title="Finanzas">Tab 3 content</Tab>
-						</Tabs>
-					</Col>
+            <Tabs defaultActiveKey={2} id="uncontrolled-tab-example">
+              <Tab eventKey={1} title="Adicciones">Tab 1 content</Tab>
+              <Tab eventKey={2} title="Familiar">Tab 2 content</Tab>
+              <Tab eventKey={3} title="Finanzas">Tab 3 content</Tab>
+            </Tabs>
+          </Col>
         </Row>
-			</div>
+      </div>
     )
   }
 }

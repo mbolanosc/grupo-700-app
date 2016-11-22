@@ -65,7 +65,7 @@ class Leftform extends Component {
     }
   }
   ValidateEmail(){
-    console.log('EmailCorrectSyntax!!!' , this.props.EmailCorrectSyntax);
+
       if (this.props.userEmail.length >= 4 && this.props.EmailCorrectSyntax) {
         return 'success';
       } else if (this.props.userEmail.length === 1 && !this.props.EmailCorrectSyntax) {
@@ -85,7 +85,6 @@ class Leftform extends Component {
 }
 
     render() {
-      console.log('PROPS' , this.props);
       return (
         <div className="left-form-container">
           <Row className="show-grid">
@@ -128,7 +127,8 @@ class Leftform extends Component {
                       type="text"
                       placeholder="Segundo apellido"
                       value={this.props.userSecondLastName}
-                      onChange={this.props.userSecondLastNameOnchage}/>
+                      onChange={this.props.userSecondLastNameOnchage}
+                    />
                     <FormControl.Feedback/>
                   </Col>
                 </FormGroup>
@@ -174,7 +174,7 @@ class Leftform extends Component {
                   <Col sm={12}>
                     <FormControl
                       type="date"
-                      value ={this.props.userBornDate}
+                      value={this.props.userBornDate}
                       onChange={this.props.userBornDateOnChange}/>
                     <FormControl.Feedback/>
                   </Col>
@@ -286,12 +286,12 @@ class Leftform extends Component {
               </Radio>
 
               <Row className="show-grid">
-                <Button className="bottom-btn" bsStyle="info" onClick={this.props.onClickSave}>Guardar</Button>
+                <Button className="bottom-btn" bsStyle="success" onClick={this.props.onClickSave}>Guardar</Button>
               </Row>
 
               <br></br>
               <Row className="show-grid">
-                <Button className="bottom-btn" bsStyle="info">Limpiar</Button>
+                <Button className="bottom-btn" bsStyle="default">Limpiar</Button>
               </Row>
             </Col>
           </Row>

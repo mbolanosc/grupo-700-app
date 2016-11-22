@@ -11,6 +11,10 @@ import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import 'react-s-alert/dist/s-alert-default.css';
 
 const  userChoiseData = ['Nuevo' , 'Buscar'];
+const  MultiselectDataTema =
+  ['Familiar','Adicciones','Finanzas','Sanidad','Problemas emocionales','Vida cristiana'];
+  const MultiselectDataMotivo = [
+      'Oración','Testimonio','Ofrenda','Consejería','Otro'];
 const initialState = {
   userChoise:'',
 
@@ -44,6 +48,12 @@ const initialState = {
 
   userResumen:'',
   userResumenErrorState : false,
+
+  userTema:'',
+  userTemaErrorState : false,
+
+  userMotivo:'',
+  userMotivoErrorState : false,
 }
 
 class App extends Component {
@@ -63,6 +73,9 @@ class App extends Component {
     this.handleUserBornDate = this.handleUserBornDate.bind(this);
     this.handelUserResidence = this.handelUserResidence.bind(this);
     this.handleResumen = this.handleResumen.bind(this);
+    this.handleMotivo=this.handleMotivo.bind(this);
+
+    this.handleTema = this.handleTema.bind(this);
     this.handleSave = this.handleSave.bind(this);
 
   }
@@ -154,6 +167,16 @@ class App extends Component {
     this.setState({userResumen: e.target.value});
     console.log('userResumen '  + this.state.userResumen);
   }
+
+  handleTema(e){
+    this.setState({userTema: e});
+    console.log('userTema '  , this.state.userTema);
+
+  }
+  handleMotivo(e){
+    this.setState({userMotivo: e});
+    console.log('userMotivo '  , this.state.userMotivo);
+  }
   handleSave(e){
     e.preventDefault();
     console.log('save btn');
@@ -161,10 +184,12 @@ class App extends Component {
     var validName =  this.validateEmpty(this.state.userName);
     var validFirstLastName =  this.validateEmpty(this.state.userFirstLastName);
     var validSecondLastName =  this.validateEmpty(this.state.userSecondLastName);
-    var validEmail =  this.state.EmailCorrectSyntax;
-    var validBornDate =  this.validateEmpty(this.state.userBornDate);
-    var validResidence =  this.validateEmpty(this.state.userResidence);
-    var validResume =  this.validateEmpty(this.state.userResumen);
+    var validEmail=  this.state.EmailCorrectSyntax;
+    var validBornDate=  this.validateEmpty(this.state.userBornDate);
+    var validResidence=  this.validateEmpty(this.state.userResidence);
+    var validResume=  this.validateEmpty(this.state.userResumen);
+    var validTema=  this.validateEmpty(this.state.userTema);
+    var validMotivo=  this.validateEmpty(this.state.userMotivo);
 
     if(validName
       && validFirstLastName
@@ -173,6 +198,8 @@ class App extends Component {
       && validBornDate
       && validResidence
       && validResume
+      && validTema
+      && validMotivo
     ){
       console.log('entro');
       Alert.success('Contacto guardado!', {
@@ -192,7 +219,8 @@ class App extends Component {
       this.setState({userBornDateErrorState: true});
       this.setState({userResidenceErrorState: true});
       this.setState({userResumenErrorState: true});
-
+      this.setState({userTemaErrorState: true});
+      this.setState({userMotivoErrorState: true});
     }
   }
 
@@ -227,7 +255,7 @@ class App extends Component {
 
 
   render() {
-    console.log('initialState ', initialState);
+
     return (
       <div className="app-container">
         <Topbar
@@ -254,6 +282,16 @@ class App extends Component {
   				<Row className="show-grid">
   					<Col md={6} mdPush={6}>
               <Rightform
+                dataTema={MultiselectDataTema}
+                TemaOnChange={this.handleTema}
+                userTema = {this.state.userTema}
+                userTemaErrorState = {this.state.userTemaErrorState}
+
+                dataMotivo={MultiselectDataMotivo}
+                MotivoOnChange={this.handleMotivo}
+                userMotivo={this.state.userMotivo}
+                userMotivoErrorState={this.state.userMotivoErrorState}
+
               />
             </Col>
   					<Col md={6} mdPull={6}>
@@ -279,13 +317,13 @@ class App extends Component {
                 userBornDateErrorState={this.state.userBornDateErrorState}
                 userBornDateOnChange={this.handleUserBornDate}
 
-                userResidence = {this.state.userResidence}
+                userResidence={this.state.userResidence}
                 userResidenceErrorState={this.state.userResidenceErrorState}
-                userResidenceOnChange = {this.handelUserResidence}
+                userResidenceOnChange={this.handelUserResidence}
 
-                userResumen = {this.state.userResumen}
-                userResumenErrorState = {this.state.userResumenErrorState}
-                userResumenOnChange = {this.handleResumen}
+                userResumen={this.state.userResumen}
+                userResumenErrorState={this.state.userResumenErrorState}
+                userResumenOnChange={this.handleResumen}
 
 
 
