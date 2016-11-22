@@ -42,6 +42,28 @@ class Leftform extends Component {
       return 'error';
     }
   }
+  ValidateResidence(){
+    if (this.props.userResidence.length >= 5) {
+      return 'success';
+    } else if (this.props.userResidence.length === 3) {
+      return 'warning';
+    } else if (this.props.userResidence.length === 1) {
+      return 'error';
+    } else if (this.props.userResidenceErrorState) {
+      return 'error';
+    }
+  }
+  ValidateResume(){
+    if (this.props.userResumen.length >= 5) {
+      return 'success';
+    } else if (this.props.userResumen.length === 3) {
+      return 'warning';
+    } else if (this.props.userResumen.length === 1) {
+      return 'error';
+    } else if (this.props.userResumenErrorState) {
+      return 'error';
+    }
+  }
   ValidateEmail(){
     console.log('EmailCorrectSyntax!!!' , this.props.EmailCorrectSyntax);
       if (this.props.userEmail.length >= 4 && this.props.EmailCorrectSyntax) {
@@ -52,7 +74,15 @@ class Leftform extends Component {
         return 'error';
       }
   }
-
+  ValidateDate(){
+    if (this.props.userBornDate.length > 1){
+      return 'success';
+    } else if (this.props.userBornDate.length === 1){
+      return 'error';
+    } else if (this.props.userBornDateErrorState) {
+    return 'error';
+  }
+}
 
     render() {
       console.log('PROPS' , this.props);
@@ -139,10 +169,13 @@ class Leftform extends Component {
 
             <Col xs={6} md={4}>
               <Form horizontal>
-                <FormGroup>
+                <FormGroup validationState={this.ValidateDate()}>
                   <Col componentClass={ControlLabel} sm={4}>Nacimiento</Col>
                   <Col sm={12}>
-                    <FormControl type="date"/>
+                    <FormControl
+                      type="date"
+                      value ={this.props.userBornDate}
+                      onChange={this.props.userBornDateOnChange}/>
                     <FormControl.Feedback/>
                   </Col>
                 </FormGroup>
@@ -163,10 +196,14 @@ class Leftform extends Component {
           <Row className="show-grid">
             <Col xs={6} md={4}>
               <Form horizontal>
-                <FormGroup >
+                <FormGroup validationState={this.ValidateResidence()}>
                   <Col componentClass={ControlLabel} sm={4}>Residencia</Col>
                   <Col sm={12}>
-                    <FormControl type="text" placeholder="Lugar de residencia"/>
+                    <FormControl
+                      type="text"
+                      placeholder="Lugar de residencia"
+                      value={this.props.userResidence}
+                      onChange={this.props.userResidenceOnChange}/>
                   </Col>
                   <FormControl.Feedback/>
                 </FormGroup>
@@ -231,9 +268,13 @@ class Leftform extends Component {
 
           <Row className="show-grid">
             <Col md={8}>
-              <FormGroup >
+              <FormGroup validationState={this.ValidateResume()}>
                 <ControlLabel>Resumen del caso</ControlLabel>
-                <FormControl componentClass="textarea"/>
+                <FormControl
+                  componentClass="textarea"
+                  value={this.props.userResumen}
+                  onChange={this.props.userResumenOnChange}
+                />
                 <FormControl.Feedback/>
               </FormGroup>
             </Col>

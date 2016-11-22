@@ -34,7 +34,16 @@ const initialState = {
 
   userEmail:'',
   userEmailErrorState : false,
-  EmailCorrectSyntax:false
+  EmailCorrectSyntax:false,
+
+  userBornDate:'',
+  userBornDateErrorState : false,
+
+  userResidence:'',
+  userResidenceErrorState : false,
+
+  userResumen:'',
+  userResumenErrorState : false,
 }
 
 class App extends Component {
@@ -51,6 +60,9 @@ class App extends Component {
     this.handleChangeUserFirstLastName = this.handleChangeUserFirstLastName.bind(this);
     this.handleChangeUserSecondLastName = this.handleChangeUserSecondLastName.bind(this);
     this.handleUserEmail = this.handleUserEmail.bind(this);
+    this.handleUserBornDate = this.handleUserBornDate.bind(this);
+    this.handelUserResidence = this.handelUserResidence.bind(this);
+    this.handleResumen = this.handleResumen.bind(this);
     this.handleSave = this.handleSave.bind(this);
 
   }
@@ -129,6 +141,19 @@ class App extends Component {
     console.log('USERNAME! '  + this.state.userEmail);
 
   }
+  handleUserBornDate(e){
+    this.setState({userBornDate: e.target.value});
+    console.log('date '  + this.state.userBornDate);
+  }
+  handelUserResidence(e){
+    this.setState({userResidence: e.target.value});
+    //this.validateEmpty(e.target.value);
+    console.log('userResidence '  + this.state.userResidence);
+  }
+  handleResumen(e){
+    this.setState({userResumen: e.target.value});
+    console.log('userResumen '  + this.state.userResumen);
+  }
   handleSave(e){
     e.preventDefault();
     console.log('save btn');
@@ -136,9 +161,19 @@ class App extends Component {
     var validName =  this.validateEmpty(this.state.userName);
     var validFirstLastName =  this.validateEmpty(this.state.userFirstLastName);
     var validSecondLastName =  this.validateEmpty(this.state.userSecondLastName);
-    var validEmail =  this.validateEmpty(this.state.userEmail);
+    var validEmail =  this.state.EmailCorrectSyntax;
+    var validBornDate =  this.validateEmpty(this.state.userBornDate);
+    var validResidence =  this.validateEmpty(this.state.userResidence);
+    var validResume =  this.validateEmpty(this.state.userResumen);
 
-    if(validName && validFirstLastName && validSecondLastName && validEmail){
+    if(validName
+      && validFirstLastName
+      && validSecondLastName
+      && validEmail
+      && validBornDate
+      && validResidence
+      && validResume
+    ){
       console.log('entro');
       Alert.success('Contacto guardado!', {
         position: 'top-right',
@@ -154,6 +189,9 @@ class App extends Component {
       this.setState({userFirstLastNameErrorState: true});
       this.setState({userSecondLastNameErrorState: true});
       this.setState({userEmailErrorState: true});
+      this.setState({userBornDateErrorState: true});
+      this.setState({userResidenceErrorState: true});
+      this.setState({userResumenErrorState: true});
 
     }
   }
@@ -232,10 +270,22 @@ class App extends Component {
                 userSecondLastNameErrorState={this.state.userSecondLastNameErrorState}
                 userSecondLastNameOnchage={this.handleChangeUserSecondLastName}
 
-                userEmail= {this.state.userEmail}
+                userEmail={this.state.userEmail}
                 userEmailErrorState={this.state.userEmailErrorState}
                 userEmailOnChange={this.handleUserEmail}
                 EmailCorrectSyntax={this.state.EmailCorrectSyntax}
+
+                userBornDate={this.state.userBornDate}
+                userBornDateErrorState={this.state.userBornDateErrorState}
+                userBornDateOnChange={this.handleUserBornDate}
+
+                userResidence = {this.state.userResidence}
+                userResidenceErrorState={this.state.userResidenceErrorState}
+                userResidenceOnChange = {this.handelUserResidence}
+
+                userResumen = {this.state.userResumen}
+                userResumenErrorState = {this.state.userResumenErrorState}
+                userResumenOnChange = {this.handleResumen}
 
 
 
