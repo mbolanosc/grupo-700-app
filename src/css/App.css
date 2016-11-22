@@ -6,14 +6,8 @@
 .glyphicon-earphone:before {
   margin-right: 1em;
 }
-.app-container{
-}
-.left-form-container{
-
-}
-.rigth-form-container{
-
-}
+/*end navbar*/
+/*form*/
 textarea.form-control {
     height: 8.6em;
 }
@@ -22,9 +16,6 @@ textarea.form-control {
 }
 .multiple-fields{
 	height: 12em !important;
-}
-#bottom-rigth-form{
-
 }
 .bottom-btn{
 	width: 100%;

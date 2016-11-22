@@ -20,7 +20,7 @@ const Styles = {
     backgroundColor:'#E7E7E7'
   },
   successBackground:{
-    backgroundColor:'#BADA55'
+    backgroundColor:'#D3E9BA'
   }
 };
 const initialState = {
@@ -113,16 +113,20 @@ class App extends Component {
 
     var validHomePhone =  this.validateEmpty(this.state.userHomePhone);
     var validNumberHomePhone = this.validateNumber(this.state.userHomePhone);
+    var validLengthHomePhone = this.validateLengthNumber(this.state.userHomePhone);
 
     var validPhone =  this.validateEmpty(this.state.userPhone);
     var validNumberPhone = this.validateNumber(this.state.userPhone);
+    var validLengthPhone = this.validateLengthNumber(this.state.userPhone);
 
     var validOfficePhone =  this.validateEmpty(this.state.userOfficePhone);
     var validNumberOfficePhone = this.validateNumber(this.state.userOfficePhone);
+    var validLengtOfficePhone = this.validateLengthNumber(this.state.userOfficePhone);
 
-    if( (validHomePhone && !validNumberHomePhone)
-        || (validPhone && !validNumberPhone)
-        || (validOfficePhone && !validNumberOfficePhone)
+
+    if( (validHomePhone && !validNumberHomePhone && validLengthHomePhone)
+        || (validPhone && !validNumberPhone && validLengthPhone)
+        || (validOfficePhone && !validNumberOfficePhone && validLengtOfficePhone)
       ){
       console.log('base de datos');
 
@@ -262,15 +266,19 @@ class App extends Component {
       console.log('el state que me importa ' + this.state.EmailCorrectSyntax);
     }
   }
-
+  validateLengthNumber(value){
+    var x = value.length;
+    var valid = false;
+    if (x === 8) {
+      valid = true;
+    }
+    return valid;
+  }
 
 
 
 
   render() {
-    console.log('userFound del render ' , this.state.userFound);
-    console.log('mainBackground state del render ', this.state.mainBackground);
-
     return (
       <div className="app-container" style={this.state.mainBackground}>
         <Topbar
