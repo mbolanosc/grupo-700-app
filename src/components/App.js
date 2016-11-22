@@ -10,7 +10,6 @@ import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-css-effects/jelly.css';
 import 'react-s-alert/dist/s-alert-default.css';
 
-
 const  userChoiseData = ['Nuevo' , 'Buscar'];
 const initialState = {
   userChoise:'',
@@ -23,6 +22,19 @@ const initialState = {
 
   userOfficePhone:'',
   userOfficePhoneErrorState: false,
+
+  userName:'',
+  userNameErrorState : false,
+
+  userFirstLastName:'',
+  userFirstLastNameErrorState : false,
+
+  userSecondLastName:'',
+  userSecondLastNameErrorState : false,
+
+  userEmail:'',
+  userEmailErrorState : false,
+  EmailCorrectSyntax:false
 }
 
 class App extends Component {
@@ -33,8 +45,13 @@ class App extends Component {
     this.handleChangeUserPhone = this.handleChangeUserPhone.bind(this);
     this.handleChangeUserOfficePhone = this.handleChangeUserOfficePhone.bind(this);
     this.handleChangeCheckButtons= this.handleChangeCheckButtons.bind(this);
-
     this.handleSearch = this.handleSearch.bind(this);
+
+    this.handleChangeUserName = this.handleChangeUserName.bind(this);
+    this.handleChangeUserFirstLastName = this.handleChangeUserFirstLastName.bind(this);
+    this.handleChangeUserSecondLastName = this.handleChangeUserSecondLastName.bind(this);
+    this.handleUserEmail = this.handleUserEmail.bind(this);
+    this.handleSave = this.handleSave.bind(this);
 
   }
   handleChangeUserHomePhone(e) {
@@ -58,7 +75,7 @@ class App extends Component {
   }
   handleSearch(e){
     e.preventDefault();
-    console.log('save btn');
+    console.log('search btn');
 
     var validHomePhone =  this.validateEmpty(this.state.userHomePhone);
     var validNumberHomePhone = this.validateNumber(this.state.userHomePhone);
@@ -68,10 +85,6 @@ class App extends Component {
 
     var validOfficePhone =  this.validateEmpty(this.state.userOfficePhone);
     var validNumberOfficePhone = this.validateNumber(this.state.userOfficePhone);
-
-
-    console.log('tiene que dar true ' + validOfficePhone);
-    console.log('tiene que dar false ' + validNumberOfficePhone);
 
     if( (validHomePhone && !validNumberHomePhone)
         || (validPhone && !validNumberPhone)
@@ -95,12 +108,62 @@ class App extends Component {
     }
   }
 
+  handleChangeUserName(e){
+    this.setState({userName: e.target.value});
+    this.validateEmpty(e.target.value);
+    console.log('name '  + this.state.userName);
+  }
+  handleChangeUserFirstLastName(e){
+    this.setState({userFirstLastName: e.target.value});
+    this.validateEmpty(e.target.value);
+    console.log('userFirstLastName '  + this.state.userFirstLastName);
+  }
+  handleChangeUserSecondLastName(e){
+    this.setState({userSecondLastName: e.target.value});
+    this.validateEmpty(e.target.value);
+    console.log('userSecondLastName '  + this.state.userSecondLastName);
+  }
+  handleUserEmail(e){
+    this.setState({userEmail: e.target.value});
+    this.validateEmail(e.target.value);
+    console.log('USERNAME! '  + this.state.userEmail);
+
+  }
+  handleSave(e){
+    e.preventDefault();
+    console.log('save btn');
+
+    var validName =  this.validateEmpty(this.state.userName);
+    var validFirstLastName =  this.validateEmpty(this.state.userFirstLastName);
+    var validSecondLastName =  this.validateEmpty(this.state.userSecondLastName);
+    var validEmail =  this.validateEmpty(this.state.userEmail);
+
+    if(validName && validFirstLastName && validSecondLastName && validEmail){
+      console.log('entro');
+      Alert.success('Contacto guardado!', {
+        position: 'top-right',
+        effect: 'jelly'
+      });
+    }else{
+      console.log('no entra');
+      Alert.error('Espacios vacios!', {
+        position: 'top-right',
+        effect: 'jelly'
+      });
+      this.setState({userNameErrorState: true});
+      this.setState({userFirstLastNameErrorState: true});
+      this.setState({userSecondLastNameErrorState: true});
+      this.setState({userEmailErrorState: true});
+
+    }
+  }
+
   validateEmpty(value){
     var valid = true;
     if(value === ''){
       valid = false;
       console.log('esta vacio');
-    }else {
+    }else{
       console.log('no esta vacio');
     }
     return valid;
@@ -109,6 +172,20 @@ class App extends Component {
     var res = isNaN(value);
     return res;
   }
+  validateEmail(value){
+    var x = value;
+    var atpos = x.indexOf("@");
+    var dotpos = x.lastIndexOf(".");
+    if (atpos < 1 || dotpos < atpos + 2 || dotpos + 2 >= x.length) {
+      console.log('el state que me importa ' + this.state.EmailCorrectSyntax);
+    }else{
+      this.setState({EmailCorrectSyntax:true});
+      console.log('el state que me importa ' + this.state.EmailCorrectSyntax);
+    }
+  }
+
+
+
 
 
   render() {
@@ -120,22 +197,19 @@ class App extends Component {
           stateRadioBtns={initialState.userHomePhone}
           onChangeRadioBtns={this.handleChangeCheckButtons}
 
-          stateHouseNumber = {this.state.userHomePhone}
+          stateHouseNumber={this.state.userHomePhone}
           onChangeHouseNumber={this.handleChangeUserHomePhone}
-          validateErrorHomePhone = {this.state.userHomePhoneErrorState}
+          validateErrorHomePhone={this.state.userHomePhoneErrorState}
 
-          statePhoneNumber = {this.state.userPhone}
+          statePhoneNumber={this.state.userPhone}
           onChangePhoneNumber={this.handleChangeUserPhone}
-          validateErrorPhone = {this.state.userPhoneErrorState}
+          validateErrorPhone={this.state.userPhoneErrorState}
 
-          statePhoneOfficeNumber = {this.state.userOfficePhone}
+          statePhoneOfficeNumber={this.state.userOfficePhone}
           onChangePhoneOfficeNumber={this.handleChangeUserOfficePhone}
-          validateErrorOfficePhone = {this.state.userOfficePhoneErrorState}
+          validateErrorOfficePhone={this.state.userOfficePhoneErrorState}
 
-          onClickBtn = {this.handleSearch}
-
-
-
+          onClickBtn={this.handleSearch}
         />
 
         <Grid className="left-component">
@@ -146,6 +220,28 @@ class App extends Component {
             </Col>
   					<Col md={6} mdPull={6}>
               <Leftform
+                userName={this.state.userName}
+                userNameOnchange={this.handleChangeUserName}
+                userNameErrorState={this.state.userNameErrorState}
+
+                userFirstLastName={this.state.userFirstLastName}
+                userFirstLastNameErrorState={this.state.userFirstLastNameErrorState}
+                userFirstLastNameOnchage={this.handleChangeUserFirstLastName}
+
+                userSecondLastName={this.state.userSecondLastName}
+                userSecondLastNameErrorState={this.state.userSecondLastNameErrorState}
+                userSecondLastNameOnchage={this.handleChangeUserSecondLastName}
+
+                userEmail= {this.state.userEmail}
+                userEmailErrorState={this.state.userEmailErrorState}
+                userEmailOnChange={this.handleUserEmail}
+                EmailCorrectSyntax={this.state.EmailCorrectSyntax}
+
+
+
+
+                onClickSave={this.handleSave}
+
               />
             </Col>
   				</Row>

@@ -51,7 +51,6 @@ class Topbar extends Component{
     }
   }
   render(){
-    console.log('state desde componente topbar: ' , this.props);
     return (
       <Navbar>
         <Navbar.Header>
