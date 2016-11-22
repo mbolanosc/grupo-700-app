@@ -13,11 +13,20 @@ import 'react-s-alert/dist/s-alert-default.css';
 const  userChoiseData = ['Nuevo' , 'Buscar'];
 const  MultiselectDataTema =
   ['Familiar','Adicciones','Finanzas','Sanidad','Problemas emocionales','Vida cristiana'];
-  const MultiselectDataMotivo = [
+const MultiselectDataMotivo = [
       'Oración','Testimonio','Ofrenda','Consejería','Otro'];
+const Styles = {
+  defaultBackground:{
+    backgroundColor:'#E7E7E7'
+  },
+  successBackground:{
+    backgroundColor:'#BADA55'
+  }
+};
 const initialState = {
-  userChoise:'',
+  mainBackground:Styles.defaultBackground,
 
+  userChoise:'',
   userHomePhone:'',
   userHomePhoneErrorState: false,
 
@@ -116,10 +125,15 @@ class App extends Component {
         || (validOfficePhone && !validNumberOfficePhone)
       ){
       console.log('base de datos');
+
       Alert.success('Usuario encontrado!', {
         position: 'top-right',
         effect: 'jelly'
       });
+      this.setState({mainBackground: Styles.successBackground});
+      console.log('EL NUEVO ',this.state.mainBackground);
+
+
     }else{
       console.log('no entra');
       Alert.warning('Espacios vacios!', {
@@ -129,7 +143,6 @@ class App extends Component {
       this.setState({userHomePhoneErrorState: true});
       this.setState({userPhoneErrorState: true});
       this.setState({userOfficePhoneErrorState: true});
-      console.log('estado de error ' + this.state.userPhoneErrorState);
     }
   }
 
@@ -255,9 +268,11 @@ class App extends Component {
 
 
   render() {
+    console.log('userFound del render ' , this.state.userFound);
+    console.log('mainBackground state del render ', this.state.mainBackground);
 
     return (
-      <div className="app-container">
+      <div className="app-container" style={this.state.mainBackground}>
         <Topbar
           selecListData={userChoiseData}
           stateRadioBtns={initialState.userHomePhone}
@@ -284,8 +299,8 @@ class App extends Component {
               <Rightform
                 dataTema={MultiselectDataTema}
                 TemaOnChange={this.handleTema}
-                userTema = {this.state.userTema}
-                userTemaErrorState = {this.state.userTemaErrorState}
+                userTema={this.state.userTema}
+                userTemaErrorState={this.state.userTemaErrorState}
 
                 dataMotivo={MultiselectDataMotivo}
                 MotivoOnChange={this.handleMotivo}

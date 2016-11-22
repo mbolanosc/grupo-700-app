@@ -32,7 +32,6 @@ class Rightform extends Component {
   }
 
   render() {
-    console.log('PROPS' , this.props);
     return (
       <div className="rigth-form-container">
         <Row className="show-grid">
