@@ -102,13 +102,14 @@ class Topbar extends Component{
              {' '}
             <Button
               type="submit"
-              onClick={this.props.onClickBtn}>Buscar</Button>
+              onClick={this.props.onClickBtn}
+              >Buscar</Button>
           </Navbar.Form>
 
           <Col id="navbar-cronometer">
             <div>
-            <Glyphicon glyph="earphone" />
-              Aqui va el cronometro
+              <Glyphicon glyph="earphone" />
+              {this.props.cronometerStatus}
             </div>
           </Col>
         </Navbar.Collapse>

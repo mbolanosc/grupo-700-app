@@ -6,6 +6,9 @@
 .glyphicon-earphone:before {
   margin-right: 1em;
 }
+#navbar-cronometer{
+	margin-top: 2.3em;
+}
 /*end navbar*/
 /*form*/
 textarea.form-control {

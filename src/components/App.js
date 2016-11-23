@@ -23,10 +23,30 @@ const Styles = {
     backgroundColor:'#D3E9BA'
   }
 };
+const testData = {
+  Personas:[
+    {
+    'name' : 'rebe',
+    'apellidos': 'Miccuci',
+    'celular': '89500481',
+    'email': 'rebe@gmai.com'
+  },
+  {
+    'name':'diego',
+    'apellidos':'Bolanos',
+    'celular': '12345678',
+    'email': 'diego@gmai.com'
+  }
+]}
 const initialState = {
-  mainBackground:Styles.defaultBackground,
+  cronometerStatus: 0,
+  cronometerEnd: 0,
+  cronometerSaveTime: '',
 
+  mainBackground:Styles.defaultBackground,
   userChoise:'',
+  FoundSomeOne:false,
+
   userHomePhone:'',
   userHomePhoneErrorState: false,
 
@@ -91,12 +111,10 @@ class App extends Component {
   handleChangeUserHomePhone(e) {
     this.setState({userHomePhone: e.target.value});
     this.validateEmpty(e.target.value);
-    console.log('telefono de la casa ' , this.state.userHomePhone);
   }
   handleChangeUserPhone(e) {
     this.setState({userPhone: e.target.value});
     this.validateEmpty(e.target.value);
-    console.log('telefono celular' , this.state.userPhone);
   }
   handleChangeUserOfficePhone(e){
     this.setState({userOfficePhone: e.target.value});
@@ -129,18 +147,33 @@ class App extends Component {
         || (validOfficePhone && !validNumberOfficePhone && validLengtOfficePhone)
       ){
       console.log('base de datos');
+      const AppComponent = this;
+      testData.Personas.map(function(persona){
+        if(persona.celular === AppComponent.state.userPhone){
+          AppComponent.setState({userName: persona.name, userFirstLastName: persona.apellidos, userEmail: persona.email});
+          AppComponent.setState({mainBackground: Styles.successBackground});
+          AppComponent.setState({FoundSomeOne: true},function(){
+            var foundSomebody = AppComponent.state.FoundSomeOne;
+            console.log('foundSomebody true: ', foundSomebody); //true
+            if (true) {
+              console.log('es true el state');
+              Alert.success('Usuario encontrado!', {
+                position: 'top-right',
+                effect: 'jelly'
+              });
+            }}.bind(this));
+        }else{
+          AppComponent.setState({FoundSomeOne: false}, function(){
+            var foundSomebody = AppComponent.state.FoundSomeOne;
+            console.log('foundSomebody false: ', foundSomebody); //false
 
-      Alert.success('Usuario encontrado!', {
-        position: 'top-right',
-        effect: 'jelly'
+          }.bind(this));
+        }
       });
-      this.setState({mainBackground: Styles.successBackground});
-      console.log('EL NUEVO ',this.state.mainBackground);
-
 
     }else{
       console.log('no entra');
-      Alert.warning('Espacios vacios!', {
+      Alert.error('Datos incorrectos.', {
         position: 'top-right',
         effect: 'jelly'
       });
@@ -153,42 +186,33 @@ class App extends Component {
   handleChangeUserName(e){
     this.setState({userName: e.target.value});
     this.validateEmpty(e.target.value);
-    console.log('name '  + this.state.userName);
   }
   handleChangeUserFirstLastName(e){
     this.setState({userFirstLastName: e.target.value});
     this.validateEmpty(e.target.value);
-    console.log('userFirstLastName '  + this.state.userFirstLastName);
   }
   handleChangeUserSecondLastName(e){
     this.setState({userSecondLastName: e.target.value});
     this.validateEmpty(e.target.value);
-    console.log('userSecondLastName '  + this.state.userSecondLastName);
   }
   handleUserEmail(e){
     this.setState({userEmail: e.target.value});
     this.validateEmail(e.target.value);
-    console.log('USERNAME! '  + this.state.userEmail);
-
   }
   handleUserBornDate(e){
     this.setState({userBornDate: e.target.value});
-    console.log('date '  + this.state.userBornDate);
   }
   handelUserResidence(e){
     this.setState({userResidence: e.target.value});
     //this.validateEmpty(e.target.value);
-    console.log('userResidence '  + this.state.userResidence);
   }
   handleResumen(e){
     this.setState({userResumen: e.target.value});
-    console.log('userResumen '  + this.state.userResumen);
   }
 
   handleTema(e){
     this.setState({userTema: e});
     console.log('userTema '  , this.state.userTema);
-
   }
   handleMotivo(e){
     this.setState({userMotivo: e});
@@ -245,9 +269,6 @@ class App extends Component {
     var valid = true;
     if(value === ''){
       valid = false;
-      console.log('esta vacio');
-    }else{
-      console.log('no esta vacio');
     }
     return valid;
   }
@@ -275,9 +296,6 @@ class App extends Component {
     return valid;
   }
 
-
-
-
   render() {
     return (
       <div className="app-container" style={this.state.mainBackground}>
@@ -297,6 +315,10 @@ class App extends Component {
           statePhoneOfficeNumber={this.state.userOfficePhone}
           onChangePhoneOfficeNumber={this.handleChangeUserOfficePhone}
           validateErrorOfficePhone={this.state.userOfficePhoneErrorState}
+
+          cronometerStatus={this.state.cronometerStatus}
+          cronometerSaveTime={this.state.cronometerSaveTime}
+          cronometerFunction={this.cronometerFunction}
 
           onClickBtn={this.handleSearch}
         />
@@ -348,11 +370,7 @@ class App extends Component {
                 userResumenErrorState={this.state.userResumenErrorState}
                 userResumenOnChange={this.handleResumen}
 
-
-
-
                 onClickSave={this.handleSave}
-
               />
             </Col>
   				</Row>
